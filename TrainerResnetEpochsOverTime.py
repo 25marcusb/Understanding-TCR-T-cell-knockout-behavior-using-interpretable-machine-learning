@@ -8,7 +8,7 @@ from pytorch_lightning import Trainer
 from torch import nn
 from torchvision import models
 import torch
-import ModifiedArchitDataLoader
+import ModifiedDataLoader
 import time
 
 # 7 models for each bin of 50
@@ -59,12 +59,12 @@ class TrainingDataModule(pl.LightningDataModule):
 
     def setup(self, stage=None):
         if stage == 'fit' or stage is None:
-            self.train_dataset = ModifiedArchitDataLoader. LiveCellImageDataset(
+            self.train_dataset = ModifiedDataLoader. LiveCellImageDataset(
                 wells=['B3', 'B4', 'B5', 'B7', 'B8', 'B9', 'E3', 'E4', 'E5'], startFrame = self.first_frame, numFrames = self.num_frames)
             # Apply transform to each image in the dataset
             self.train_dataset.transform = self.transform
         if stage == 'predict':
-            self.predict_dataset = ModifiedArchitDataLoader.LiveCellImageDataset(
+            self.predict_dataset = ModifiedDataLoader.LiveCellImageDataset(
                 wells=['B3', 'B4', 'B5', 'B7', 'B8', 'B9', 'E3', 'E4', 'E5'], startFrame = self.first_frame, numFrames = self.num_frames)
             # Apply transform to each image in the dataset
             self.predict_dataset.transform = self.transform
@@ -90,11 +90,11 @@ class TestingDataModule(pl.LightningDataModule):
 
     def setup(self, stage=None):
         if stage == 'fit' or stage is None:
-            self.train_dataset = ModifiedArchitDataLoader.LiveCellImageDataset(wells=['B6', 'B10', 'E6'], startFrame = self.first_frame, numFrames = self.num_frames)
+            self.train_dataset = ModifiedDataLoader.LiveCellImageDataset(wells=['B6', 'B10', 'E6'], startFrame = self.first_frame, numFrames = self.num_frames)
             # Apply transform to each image in the dataset
             self.train_dataset.transform = self.transform
         if stage == 'predict':
-            self.predict_dataset = ModifiedArchitDataLoader.LiveCellImageDataset(wells=['B6', 'B10', 'E6'], startFrame = self.first_frame, numFrames = self.num_frames)
+            self.predict_dataset = ModifiedDataLoader.LiveCellImageDataset(wells=['B6', 'B10', 'E6'], startFrame = self.first_frame, numFrames = self.num_frames)
             # Apply transform to each image in the dataset
             self.predict_dataset.transform = self.transform
 
