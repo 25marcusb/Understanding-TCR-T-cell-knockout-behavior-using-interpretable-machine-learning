@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import pytorch_lightning as pl
 from pytorch_lightning import Trainer
 from torchvision import models
-import SectionedArchitDataLoader
+import SectionedDataLoader
 import os
 
 PIXELS_PER_SIDE = 300
@@ -72,11 +72,11 @@ class TrainingDataModule(pl.LightningDataModule):
 
     def setup(self, stage=None):
         if stage == 'fit' or stage is None:
-            self.train_dataset = SectionedArchitDataLoader.LiveCellImageDataset(
+            self.train_dataset = SectionedDataLoader.LiveCellImageDataset(
                 wells=['B6', 'B10', 'E6'], startFrame=self.startFrame, pixel_width=PIXELS_PER_SIDE, numFrames=self.num_frames)
             self.train_dataset.transform = self.transform
         if stage == 'predict':
-            self.predict_dataset = SectionedArchitDataLoader.LiveCellImageDataset(
+            self.predict_dataset = SectionedDataLoader.LiveCellImageDataset(
                 wells=['B6', 'B10', 'E6'], startFrame=self.startFrame, pixel_width=PIXELS_PER_SIDE, numFrames=self.num_frames)
             self.predict_dataset.transform = self.transform
 
@@ -101,12 +101,12 @@ class TestingDataModule(pl.LightningDataModule):
 
     def setup(self, stage=None):
         if stage == 'fit' or stage is None:
-            self.train_dataset = SectionedArchitDataLoader.LiveCellImageDataset(wells=['B6', 'B10', 'E6'],
+            self.train_dataset = SectionedDataLoader.LiveCellImageDataset(wells=['B6', 'B10', 'E6'],
                                                                                startFrame=self.first_frame, pixel_width = PIXELS_PER_SIDE, numFrames=self.num_frames)
             # Apply transform to each image in the dataset
             self.train_dataset.transform = self.transform
         if stage == 'predict':
-            self.predict_dataset = SectionedArchitDataLoader.LiveCellImageDataset(wells=['B6', 'B10', 'E6'],
+            self.predict_dataset = SectionedDataLoader.LiveCellImageDataset(wells=['B6', 'B10', 'E6'],
                                                                                  startFrame=self.first_frame, pixel_width = PIXELS_PER_SIDE, numFrames=self.num_frames)
             # Apply transform to each image in the dataset
             self.predict_dataset.transform = self.transform
