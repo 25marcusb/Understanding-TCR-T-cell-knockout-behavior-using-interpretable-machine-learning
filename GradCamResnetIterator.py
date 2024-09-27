@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import pytorch_lightning as pl
 from pytorch_lightning import Trainer
 from torchvision import models
-import ModifiedArchitDataLoader
+import ModifiedDataLoader
 
 """Generates GradCam visualizations"""
 
@@ -60,11 +60,11 @@ class TrainingDataModule(pl.LightningDataModule):
 
     def setup(self, stage=None):
         if stage == 'fit' or stage is None:
-            self.train_dataset = ModifiedArchitDataLoader.LiveCellImageDataset(
+            self.train_dataset = ModifiedDataLoader.LiveCellImageDataset(
                 wells=['B6', 'B10', 'E6'], startFrame=self.startFrame)
             self.train_dataset.transform = self.transform
         if stage == 'predict':
-            self.predict_dataset = ModifiedArchitDataLoader.LiveCellImageDataset(
+            self.predict_dataset = ModifiedDataLoader.LiveCellImageDataset(
                 wells=['B6', 'B10', 'E6'], startFrame=self.startFrame)
             self.predict_dataset.transform = self.transform
 
@@ -88,12 +88,12 @@ class TestingDataModule(pl.LightningDataModule):
 
     def setup(self, stage=None):
         if stage == 'fit' or stage is None:
-            self.train_dataset = ModifiedArchitDataLoader.LiveCellImageDataset(wells=['B6', 'B10', 'E6'],
+            self.train_dataset = ModifiedDataLoader.LiveCellImageDataset(wells=['B6', 'B10', 'E6'],
                                                                                startFrame=self.first_frame)
             # Apply transform to each image in the dataset
             self.train_dataset.transform = self.transform
         if stage == 'predict':
-            self.predict_dataset = ModifiedArchitDataLoader.LiveCellImageDataset(wells=['B6', 'B10', 'E6'],
+            self.predict_dataset = ModifiedDataLoader.LiveCellImageDataset(wells=['B6', 'B10', 'E6'],
                                                                                  startFrame=self.first_frame)
             # Apply transform to each image in the dataset
             self.predict_dataset.transform = self.transform
